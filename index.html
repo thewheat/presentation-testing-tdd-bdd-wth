@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Testing: TDD, BDD, WTH?</title>
+        <meta name="description" content="Slide deck for BGM2 (12 September 2014)">
+        <meta name="author" content="Timothy Lim Sheng Hwee">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+            .reveal table {
+                border-collapse: collapse;
+            }
+            .reveal table, .reveal th, .reveal td {
+                border: 1px solid white;
+            }
+            .reveal th{
+                color: #000;
+                background-color: #fff;
+            }
+            .reveal table.padding th, .reveal table.padding td{
+                padding: 5px;
+            }
+            .reveal span.smaller{
+                font-size: 0.7em;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1>Testing: TDD, BDD, WTH?</h1>
+                    <h3></h3>
+                    <p>
+                        <!-- <img src="img/qrcode.slides.png" style="float:right"> -->
+                        <small>
+                                <a target="_blank" href="http://thewheatfield.org">Timothy Lim</a> 
+                                / <a target="_blank" href="http://twitter.com/thewheat">@thewheat</a>
+                                <br>
+                                Slides: <a target="_blank" href="http://thewheat.github.io/presentation-testing-tdd-bdd-wth">http://thewheat.github.io/presentation-testing-tdd-bdd-wth</a>
+                        </small>
+                    </p>
+                </section>
+                <section>
+                    <h2>Tests: Not just the thing you did in school</h2>
+                    <ul>
+                        <li class="fragment">What is Testing To You?
+                            <ul class="fragment">
+                                <li>Ensuring code does what it is meant to do</li>
+                                <li>Ensuring system works as expected</li>
+                                <li>Being able to manually test things</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">What is your current testing strategy?
+                            <ul class="fragment">
+                                <li>Code and hope it works?</li>
+                                <li>Code locally, test, push to production and retest?</li>
+                                <li>Staging Environments?</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Are you confident in your build?</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>TDD: Test Driven Development</h2>
+                    <ol class="fragment">
+                        <li>Write test</li>
+                        <li>Write code</li>
+                        <li>Refactor</li>
+                    </ol>
+                    <p class="fragment">
+                        <a target="_blank" href="http://wrozka.github.io/ppppp-pair-programming/#/18"><img src="img/red-green-refactor.png"></a>
+                    </p>
+                </section>
+                <section>
+                    <h2>BDD: Behaviour Driven Development</h2>
+                    <ul>
+                        <li class="fragment"><a target="_blank" href="http://pythonhosted.org/behave/philosophy.html">Philosophy</a> / <a target="_blank" href="http://guide.agilealliance.org/guide/bdd.html">Definition</a>
+                            <ul>
+                                <li class="fragment">Focuses on clear understanding of software behavior from stakeholders</li>
+                                <li class="fragment">Focuses on why code should be created: thinking "from the outside in"</li>
+                                <li class="fragment">Extends TDD: tests written in natural language that non-programmers can read</li>
+                            </ul>
+                        </li>                        
+                        <li class="fragment">Can be used as Acceptance Tests
+                            <ul>
+                                <li class="fragment"><a target="_blank" href="http://en.wikipedia.org/wiki/Given-When-Then">Given [initial context], &nbsp;&nbsp;when [event occurs], &nbsp;&nbsp;then [ensure some outcomes]</a></li>
+                                <li class="fragment">Given: I am at the login page</li>
+                                <li class="fragment">When: I enter valid credentials</li>
+                                <li class="fragment">Then: I should be logged in and see the "logout" link</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Different types of tests</h2>
+                    <ul>
+                        <li class="fragment">There are many but will focus on 3</li>
+                        <li class="fragment">Unit Tests
+                            <ul class="fragment">
+                                <li>Testing core unit of works</li>
+                                <li>Isolated: no interaction with other systems (e.g. databases, web services)</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Integration Tests
+                            <ul class="fragment">
+                                <li>Test the integration between 2 different "units" / systems (e.g. your core system and the database / web service)</li>
+                                <li>Database interaction: test database or in-memory databses (<a target="_blank" href="http://www.h2database.com/">H2</a> / <a target="_blank" href="http://www.sqlite.org/inmemorydb.html">SQLite</a>)</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Functional Tests
+                            <ul class="fragment">
+                                <li>Tests features / functions of a system from user's point of view (<a href="http://en.wikipedia.org/wiki/Functional_testing">Quality Assurance process. Black box testing</a>)</li>
+                                <li>Automation tools (<a target="_blank" href="http://www.seleniumhq.org/">Selenium</a> for webapps)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Where to Start?</h2>
+                    <table class="padding" border='1' width="100%">
+                        <tr>
+                            <th>Functional Tests</th>
+                            <th>Integration Tests</th>
+                            <th>Unit Tests</th>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Big picture</td>
+                            <td></td>
+                            <td>Small picture</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>More Complex</td>
+                            <td></td>
+                            <td>Simple</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Less Robust</td>
+                            <td></td>
+                            <td>Robust</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Slow</td>
+                            <td></td>
+                            <td>Fast</td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <h2>Test Suites / Frameworks</h2>
+                    <ul>
+                        <li class="fragment">
+                            Unit & Integration Testing 
+                            <ul>
+                                <li><a target="_blank" href="http://junit.org/">JUnit (Java)</a></li>
+                                <li><a target="_blank" href="http://www.nunit.org/">Nunit (C#)</a></li>
+                                <li><a target="_blank" href="http://rspec.info/">RSpec (Ruby)</a></li>
+                                <li><a target="_blank" href="http://qunitjs.com/">QUnit (Javascript)</a></li>
+                                <li><a target="_blank" href="http://visionmedia.github.io/mocha/">Mocha (Javascript)</a></li>                                
+                                <li><a target="_blank" href="https://phpunit.de/">PHPUnit (PHP)</a></li>
+                                <li><a target="_blank" href="http://docs.python-guide.org/en/latest/writing/tests/">Unittest (Python)</a></li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            BDD specific
+                            <ul>
+                                <li><a target="_blank" href="http://cukes.info/">Cucumber</a>
+                                (<a target="_blank" href="https://github.com/cucumber/cucumber-jvm">Java</a>
+                                / <a target="_blank" href="https://github.com/cucumber/cucumber-rails">Ruby on Rails</a>
+                                / <a target="_blank" href="https://github.com/cucumber/cucumber-js">Javascript</a>)
+                                </li>
+                                <li><a target="_blank" href="http://www.specflow.org/">SpecFlow (C#)</a></li>
+                                <li><a target="_blank" href="http://jasmine.github.io/">Jasmine (Javascript)</a></li>
+                                <li><a target="_blank" href="http://casperjs.org/">CasperJS (Javascript)</a></li>
+                                <li><a target="_blank" href="http://pythonhosted.org/behave/">behave (Python)</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <sectiona style='display: none'>
+                    <h2>Structure of Testing Frameworks</h2>
+                    <table border='1' width="100%">
+                        <tr>
+                            <th>Setup (before all / BeforeClass)</th>
+                            <td class="fragment">Runs <u>once before any tests</u> have run</td>
+                            <td class="fragment">Create DB schema</td>
+                        </tr>
+                        <tr>
+                            <th>Teardown (after all / AfterClass)</th>
+                            <td class="fragment">Runs once <u>after all tests</u> are run</td>
+                            <td class="fragment">Drop DB schema</td>
+                        </tr>
+                        <tr>
+                            <th>Test (Test Fixture)</th>
+                            <td class="fragment">Actual test to run</td>
+                            <td class="fragment">Assert something</td>
+                        </tr>
+                        <tr>
+                            <th>Test Fixture Setup (before each)</th>
+                            <td class="fragment">Runs <u>each time before any test</u> (i.e. runs 2 times if there are 2 tests)</td>
+                            <td class="fragment">Populate DB / state</td>
+                        </tr>
+                        <tr>
+                            <th>Test Fixture Teardown (after each)</th>
+                            <td class="fragment">Runs <u>each time after any test</u></td>
+                            <td class="fragment">Clear DB / state</td>
+                        </tr>
+                    </table>
+                </sectiona>
+                <section>
+                    <h2>Structure of Testing Functions</h2>
+                    <ol class="fragment">
+                        <li>Setup <span class='smaller'>(before all / BeforeClass)</span>
+                            <ul class="fragment">
+                                <li>Runs <u>once before any tests</u> have run</li>
+                                <li>E.g. create database schema</li>
+                            </ul>
+                        </li>
+                        <li>Test Fixture Setup <span class='smaller'>(before each)</span>
+                            <ul class="fragment">
+                                <li>Runs <u>each time before any test</u></li>
+                                <li>E.g. clear &amp; populate database / state</li>
+                            </ul>
+                        </li>
+                        <li>Test <span class='smaller'>(Test Fixture)</span>
+                            <ul class="fragment">
+                                <li>Actual test to run: Assert something</li>
+                            </ul>
+                        </li>
+                        <li>Test Fixture Teardown <span class='smaller'>(after each)</span>
+                            <ul class="fragment">
+                                <li>Runs <u>each time after any test</u></li>
+                                <li>E.g. clear database / state</li>
+                            </ul>
+                        </li>
+                        <li>Teardown <span class='smaller'>(after all / AfterClass)</span>
+                            <ul class="fragment">
+                                <li>Runs once <u>after all tests</u> are run</li>
+                                <li>E.g. drop database schema</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                <section>
+                    <h2>Testing Concepts (1/3)</h2>
+                    <ul style="width:100%">
+                        <li>Test <span class='smaller'>(Test Fixture)</span>
+                            <ul>
+                                <li>Actual test to run</li>
+                                <li>Assert something</li>
+                            </ul>
+<pre class="fragment">
+@Test
+addTwoPositiveNumbers(){
+    calc = new Calculator();
+    output = calc.add(1,2);
+    Assert.Equal(3, output);
+}
+</pre>
+<pre class="fragment">
+@Test
+primeNumberIsCorrectlyDetected(){
+    calc = new Calculator();
+    output = calc.isPrime(2);
+    Assert.IsTrue(output);
+}
+</pre>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Testing Concepts (2/3)</h2>
+                    <ul>
+                        <li class="fragment" ><a target="_blank" href="http://www.martinfowler.com/bliki/TestDouble.html">TestDouble</a>
+                            <blockquote><a target="_blank" href="http://manojjaggavarapu.wordpress.com/2012/07/03/test-driven-development/">like movie doubles, who perform stunts instead of real movie actors</a></blockquote>
+                            <li class="fragment">Types:
+                            <ol>
+                                <li>Dummy</li>
+                                <li>Fake</li>
+                                <li>Stubs</li>
+                                <li>Spies</li>
+                                <li>Mocks</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Testing Concepts (3/3)</h2>
+                    <ul>
+                        <li class="fragment" ><a target="_blank" href="http://en.wikipedia.org/wiki/Mock_object">Mocks</a>
+                            <ul>
+                                <li>Simulated objects that mimic the behavior of real objects</li>
+                                <li class="fragment">Steps:
+                                    <ol>
+                                        <li class="fragment">Create a mock object</li>
+                                        <li class="fragment">Define behaviour</li>
+                                        <li class="fragment">Call or test behaviour</li>
+                                    </ol>
+<pre class="fragment">
+// mock a concrete class
+LinkedList mockedList = mock(LinkedList.class); 
+
+//stubbing - before execution
+when(mockedList.get(0)).thenReturn("first");
+
+//folloing princs "first"
+System.out.println(mockedList.get(0));
+
+//following prints "null" because get(999) as not stubbed
+System.out.println(mockedList.get(999)); 
+
+// Source: <a href="https://code.google.com/p/mockito/">Mockito</a> 
+                                    </pre>      
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Functional Testing Concepts</h2>
+                    <ul>
+                        <li class="fragment"><a target="_blank" href="https://code.google.com/p/selenium/wiki/PageObjects">Page Object Pattern</a>
+                            <ul>
+                                <li>A pattern that: 
+                                    <ul>
+                                        <li>reduces code duplication</li>
+                                        <li>makes tests more readable and robust</li>
+                                        <li>makes tests more maintanable </li>
+                                    </ul>
+                                </li>
+                                <li class="fragment">They represent the services offered by a particular page<br>
+                                    <span class="fragment">&nbsp;&nbsp;&nbsp;&nbsp;i.e. models the 'page' for your test to interact with</span></li>
+                                <li class="fragment">They should be the only thing that has a deep knowledge of the structure of the HTML of a page<br>
+                                    <span class="fragment">&nbsp;&nbsp;&nbsp;&nbsp;i.e. changes to interface / platform (e.g. web to native), should only affect page object: other parts of tests stay the same</span></li>
+                            </ul>
+                        </li>    
+                    </ul>
+                </section>
+                <section>
+                    <h2>Functional Testing Concepts with Cucumber (1/3)</h2>
+                    <blockquote class="fragment"><a target="_blank" href="http://cukes.info/">Cucumber</a> lets software development teams describe how software should behave in plain text</blockquote>
+                    <ul>
+                        <li class="fragment">Available on many platforms</li>
+                        <li class="fragment">Utilizes <a target="_blank" href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a> syntax
+                            <ul>
+                                <li class="fragment"><a target="_blank" href="http://martinfowler.com/bliki/BusinessReadableDSL.html">Business Readable, Domain Specific Language</a>
+                                <li class="fragment">Provides for both documentation and automated tests</li>
+                                <li class="fragment">Single Gherkin source file contains a description of a single feature</li>
+                                <li class="fragment">.feature file extension</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Functional Testing Concepts with Cucumber (2/3)</h2>
+                    <ul>
+<pre class="fragment" style="width: 100%">
+ 1: Feature: Some terse yet descriptive text of what is desired
+ 2:   Textual description of the business value of this feature
+ 3:   Business rules that govern the scope of the feature
+ 4:   Any additional info that will make the feature easier to understand
+ 5: 
+ 6:   Scenario: Some determinable business situation
+ 7:     Given some precondition
+ 8:       And some other precondition
+ 9:      When some action by the actor
+10:       And some other action
+12:      Then some testable outcome is achieved
+13:       And something else we can check happens too
+14: 
+15:   Scenario: A different situation
+16:       ...    
+</pre>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Functional Testing Concepts with Cucumber (3/3)</h2>
+                    <ol>
+                        <li class="fragment">Create .feature file (with many steps)</li>
+                        <li class="fragment">Write a single step definition
+                            <ul>
+                                <li class="fragment">Convert readable text to actual code / interactions</li>
+                                <li class="fragment">With the correct plugins: Ctrl+Click step in .feature file to set up the function</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Run tests and watch it fail</li>
+                        <li class="fragment">Implement code specified in step definition to make test pass</li>
+                        <li class="fragment">Run test to see step pass</li>
+                        <li class="fragment">Repeat 2-5 until all steps in .feature file implemented</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Things to note</h2>
+                    <ul>
+                        <li class="fragment">Browser tests
+                            <ul>
+                                <li>Beware the ajax loads and templates</li>
+                                <li>sleep() if you must, but it's not ideal: <a target="_blank" href="http://docs.seleniumhq.org/docs/04_webdriver_advanced.jsp#implicit-waits">implicitlyWait()</a> could be the answer</li>
+                                <li>Different environments respond differently on the same hardware</li>
+                            </ul>
+
+                            </li>
+                        <li class="fragment"><a target="_blank" href="http://en.wikipedia.org/wiki/Code_coverage">Code Coverage</a>
+                            <ul>
+                                <li>How much of your code is tested?</li>
+                                <li>Quantity (100% coverage) is not a replacement for <a target="_blank" href="http://martinfowler.com/bliki/TestCoverage.html">Quality or thoughtfulness</a></li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            Testing is not the end all and be all
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>In conclusion</h2>
+                    <ul>
+                        <li class="fragment">Testing is great</li>
+                        <li class="fragment">Helps speed development</li>
+                        <li class="fragment">Helps ensure that your code works</li>
+                        <li class="fragment">Peace of mind while refactoring</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>THE END</h1>
+
+                        <small>
+                                <a target="_blank" href="http://thewheatfield.org">Timothy Lim</a> 
+                                / <a target="_blank" href="http://twitter.com/thewheat">@thewheat</a>
+                                <br>
+                                <a target="_blank" href="http://thewheat.github.io/presentation-testing-tdd-bdd-wth">http://thewheat.github.io/presentation-testing-tdd-bdd-wth</a>
+                        </small>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+//                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                theme: 'night', // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
